@@ -13,3 +13,12 @@ export function addNeighborhood(neighborhood) {
   })
     .then(response => response.json());
 }
+
+export function deleteNeighborhood(neighborhood) {
+  return fetch('http://localhost:3000/api/neighborhoods', {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(neighborhood)
+  })
+    .then(response => response.json());
+}

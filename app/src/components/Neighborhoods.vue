@@ -5,7 +5,7 @@
         <ul>
             <Neighborhood
                 v-for="neighborhood in neighborhoods"
-                :key="neighborhood.name"
+                :key="neighborhood.id"
                 :neighborhood="neighborhood"
             />
         </ul>
@@ -16,7 +16,7 @@
 <script>
 import Neighborhood from './Neighborhood';
 import AddNeighborhood from './AddNeighborhood';
-import { getNeighborhoods, addNeighborhood } from '../services/api';
+import { getNeighborhoods, addNeighborhood, deleteNeighborhood } from '../services/api';
 
 export default {
   data() {
@@ -39,6 +39,12 @@ export default {
       return addNeighborhood(neighborhood)
         .then(saved => {
           this.neighborhoods.push(saved);
+        });
+    },
+    handleDelete(neighborhood) {
+      return deleteNeighborhood(neighborhood)
+        .then(deleted => {
+          this.neighborhoods.pop(deleted);
         });
     }
   }

@@ -14,12 +14,12 @@
             </label>
             <label>
                 Population:
-                <input type="text" name="population" placeholder="Population" required
+                <input type="number" name="population" placeholder="Population" required
                     v-model="neighborhood.population">
             </label>
             <label>
                 Founded:
-                <input type="text" name="founded" placeholder="Founded" required
+                <input type="number" name="founded" placeholder="Founded" required
                     v-model="neighborhood.founded">
             </label>
             <label>

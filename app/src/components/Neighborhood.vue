@@ -10,6 +10,9 @@
         <p class="population">
             <span class="size">(a <em>{{ size }}</em> neighborhood)</span>
         </p>
+        <label>
+            <button on:click="handleDelete()">Delete</button>
+        </label>
     </article>
 </template>
 
@@ -22,6 +25,11 @@ export default {
     },
     size() {
       return this.neighborhood.population > 20000 ? 'big' : 'small';
+    }
+  },
+  methods: {
+    handleDelete() {
+      this.onDelete(this.neighborhood);
     }
   }
 };
