@@ -3,6 +3,12 @@ const client = require('../db-client');
 client
   .query(
     `
+      CREATE TABLE IF NOT EXISTS quadrants (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(256) NOT NULL,
+        direction VARCHAR(8) UNIQUE NOT NULL
+      );
+
     CREATE TABLE IF NOT EXISTS neighborhoods (
         id SERIAL PRIMARY KEY,
         name VARCHAR(256),
@@ -10,12 +16,6 @@ client
         population INTEGER,
         founded INTEGER,
         description VARCHAR(1024)
-    );
-
-    CREATE TABLE IF NOT EXISTS quadrants (
-      id SERIAL PRIMARY KEY,
-      name VARCHAR(256) NOT NULL,
-      direction VARCHAR(8) UNIQUE NOT NULL
     );
   `
   )

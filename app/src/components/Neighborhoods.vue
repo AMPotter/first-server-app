@@ -7,16 +7,25 @@
                 v-for="neighborhood in neighborhoods"
                 :key="neighborhood.id"
                 :neighborhood="neighborhood"
+                :on-remove="handleRemove"
+                :on-update="handleUpdate"
             />
         </ul>
-        <AddNeighborhood :on-add="handleAdd"/>
+        <h3>Add a new neighborhood</h3>
+        <NeighborhoodForm
+          label="Add"
+          :on-edit="handleAdd"/>
     </section>
 </template>
 
 <script>
 import Neighborhood from './Neighborhood';
-import AddNeighborhood from './AddNeighborhood';
-import { getNeighborhoods, addNeighborhood, deleteNeighborhood } from '../services/api';
+import NeighborhoodForm from './NeighborhoodForm';
+import {
+  getNeighborhoods,
+  addNeighborhood,
+  updateNeighborhood,
+  removeNeighborhood } from '../services/api';
 
 export default {
   data() {
@@ -32,7 +41,7 @@ export default {
   },
   components: {
     Neighborhood,
-    AddNeighborhood
+    NeighborhoodForm
   },
   methods: {
     handleAdd(neighborhood) {
@@ -41,10 +50,20 @@ export default {
           this.neighborhoods.push(saved);
         });
     },
-    handleDelete(neighborhood) {
-      return deleteNeighborhood(neighborhood)
-        .then(deleted => {
-          this.neighborhoods.pop(deleted);
+    handleRemove(id) {
+      return removeNeighborhood(id)
+        .then(() => {
+          const index = this.neighborhoods.findIndex(neighborhood => neighborhood.id === id);
+          if(index === -1) return;
+          this.neighborhoods.splice(index, 1);
+        });
+    },
+    handleUpdate(toUpdate) {
+      return updateNeighborhood(toUpdate)
+        .then(updated => {
+          this.neighborhoods = this.neighborhoods.map(neighborhood => {
+            return neighborhood.id === updated.id ? updated : neighborhood;
+          });
         });
     }
   }

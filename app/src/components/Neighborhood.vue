@@ -1,7 +1,8 @@
 <template id="neighborhood-template">
-    <article>
+  <div>
+    <article v-if="!editing">
         <h3>{{ neighborhood.name }}</h3>
-        <p>Part of: {{ neighborhood.city }}</p>
+        <p>Part of: {{ neighborhood.quadrant_id }}</p>
         <p>Founded: {{ neighborhood.founded }}</p>
         <p class="population">
             Current population:
@@ -10,15 +11,42 @@
         <p class="population">
             <span class="size">(a <em>{{ size }}</em> neighborhood)</span>
         </p>
+        <p>
+          Description:
+          <span>{{ neighborhood.description }}</span>
+        </p>
         <label>
-            <button on:click="handleDelete()">Delete</button>
+            <button @click="handleClick">Remove this neighborhood</button>
         </label>
     </article>
+
+    <NeighborhoodForm
+      v-else
+      label="Update"
+      :neighborhood="neighborhood"
+      :on-edit="onUpdate"
+    />
+    <button @click="editing = !editing">{{ editing ? 'Cancel' : '✏️' }}</button>
+  </div>
 </template>
 
 <script>
+import NeighborhoodForm from './NeighborhoodForm';
+
 export default {
-  props: ['neighborhood'],
+  data() {
+    return {
+      editing: false
+    };
+  },
+  components: {
+    NeighborhoodForm
+  },
+  props: [
+    'neighborhood',
+    'onRemove',
+    'onUpdate'
+  ],
   computed: {
     population() {
       return this.neighborhood.population.toLocaleString();
@@ -28,8 +56,10 @@ export default {
     }
   },
   methods: {
-    handleDelete() {
-      this.onDelete(this.neighborhood);
+    handleClick() {
+      if(confirm(`Are you sure you want to remove ${this.neighborhood.name}?`)) {
+        this.onRemove(this.neighborhood.id);
+      }
     }
   }
 };
