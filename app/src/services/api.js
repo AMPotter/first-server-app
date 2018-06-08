@@ -1,8 +1,7 @@
 export function getNeighborhoods() {
   return fetch('http://localhost:3000/api/neighborhoods', {
     headers: { 'Content-Type': 'application/json' }
-  })
-    .then(response => response.json());
+  }).then(response => response.json());
 }
 
 export function addNeighborhood(neighborhood) {
@@ -10,8 +9,7 @@ export function addNeighborhood(neighborhood) {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(neighborhood)
-  })
-    .then(response => response.json());
+  }).then(response => response.json());
 }
 
 export function deleteNeighborhood(neighborhood) {
@@ -19,6 +17,5 @@ export function deleteNeighborhood(neighborhood) {
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(neighborhood)
-  })
-    .then(response => response.json());
+  }).then(response => response.json());
 }

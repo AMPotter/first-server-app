@@ -1,18 +1,13 @@
-const pg = require('pg');
-const Client = pg.Client;
-const databaseUrl = 'postgres://localhost:5432/neighborhoods';
-const client = new Client(databaseUrl);
+const client = require('../db-client');
 
-client.connect()
-  .then(() => {
-    return client.query(`
-        DROP TABLE IF EXISTS neighborhoods;
-    `);
-  })
-  .then(
-    () => console.log('drop tables complete'),
-    err => console.log(err)
+client
+  .query(
+    `
+    DROP TABLE IF EXISTS neighborhoods;
+    DROP TABLE IF EXISTS quadrants;
+`
   )
+  .then(() => console.log('drop tables complete'), err => console.log(err))
   .then(() => {
     client.end();
   });

@@ -69,15 +69,13 @@ export default {
 </script>
 
 <style>
-
 .add-neighborhood {
-    width: 300px;
-    text-align: left;
-    margin: auto;
+	width: 300px;
+	text-align: left;
+	margin: auto;
 }
 
 label {
-    display: block;
+	display: block;
 }
-
 </style>
